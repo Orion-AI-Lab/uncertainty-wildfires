@@ -13,7 +13,6 @@ from glob import glob
 from utils.train_functions import enable_dropout, uncertainties, uncertainties_noisy
 from utils.calibration_metrics import draw_reliability_graph
 from utils.discard_test import draw_discard_test
-from utils.spread_skill import draw_spread_skill
 from utils.densities import draw_uncertainties_densities
 from utils.scatter_plot import scatter_plot_aleatoric_epistemic
 import numpy as np
@@ -171,54 +170,31 @@ def main(config):
 
 
             losses.append(loss.detach().cpu().numpy())
-            entropies.append(entropy.detach().cpu().numpy())
             targets.append(labels.detach().cpu().numpy())
             predictions.append(output.detach().cpu().numpy())
             means.append(mean.detach().cpu().numpy()[:,1])
             epistemics.append(epistemic.detach().cpu().numpy()[:,1])
             aleatorics.append(aleatoric.detach().cpu().numpy()[:,1])
-            xs.append(x.detach().cpu().numpy())
-            ys.append(y.detach().cpu().numpy())     
-            bas.append(bas_size.detach().cpu().numpy())
 
-
-    np.save(os.path.join(os.path.join('final_models',config['name']), 'losses.npy'), np.concatenate(losses, axis=0))
-    np.save(os.path.join(os.path.join('final_models',config['name']), 'entropies.npy'), np.concatenate(entropies, axis=0))
-    np.save(os.path.join(os.path.join('final_models',config['name']), 'targets.npy'), np.concatenate(targets, axis=0))
-    np.save(os.path.join(os.path.join('final_models',config['name']), 'predictions.npy'), np.concatenate(predictions, axis=0))
-    np.save(os.path.join(os.path.join('final_models',config['name']), 'means.npy'), np.concatenate(means, axis=0))
-    np.save(os.path.join(os.path.join('final_models',config['name']), 'epistemics.npy'), np.concatenate(epistemics, axis=0))
-    np.save(os.path.join(os.path.join('final_models',config['name']), 'aleatorics.npy'), np.concatenate(aleatorics, axis=0))
-
-    for batch_idx in range(len(targets)):
-        for sample_idx in range(len(targets[batch_idx])):
-            if (
-                targets[batch_idx][sample_idx] == 1
-                and predictions[batch_idx][sample_idx] == 0
-                and epistemics[batch_idx][sample_idx] + aleatorics[batch_idx][sample_idx] > 0.2):
-                print(xs[batch_idx][sample_idx], ys[batch_idx][sample_idx], np.exp(bas[batch_idx][sample_idx]))
 
     log = test_metrics.result()
     logger.info(log)
 
     preds, labels = np.array(test_metrics._data.total["ece"]), np.array(test_metrics._data.counts["ece"])
 
-    draw_spread_skill(np.array(test_metrics._data.total["spread_skill"]), np.array(test_metrics._data.counts["spread_skill"]))
-
     draw_reliability_graph(preds, labels, config["name"])
 
-    draw_discard_test(losses, entropies, targets, predictions, config["name"], unc_type = 'entropies')
-    draw_uncertainties_densities(predictions, targets, entropies, config["name"], unc_type = 'entropies')
-
+    #Plots for epistemic uncertainties only
     draw_discard_test(losses, epistemics, targets, predictions, config["name"], unc_type = 'epistemic')
     draw_uncertainties_densities(predictions, targets, epistemics, config["name"], unc_type = 'epistemic')
 
+    #Plots for aleatoric uncertainties only
     draw_discard_test(losses, aleatorics, targets, predictions, config["name"], unc_type = 'aleatoric')
     draw_uncertainties_densities(predictions, targets, aleatorics, config["name"], unc_type = 'aleatoric')
 
+    #Plots for sum of aleatoric and epistemic uncertainties
     draw_discard_test(losses, [x + y for x, y in zip(epistemics, aleatorics)], targets, predictions, config["name"], unc_type = 'epistemic+aleatoric')
     draw_uncertainties_densities(predictions, targets, [x + y for x, y in zip(epistemics, aleatorics)], config["name"], unc_type = 'epistemic+aleatoric')
-
 
     scatter_plot_aleatoric_epistemic(aleatorics, epistemics, predictions)
 

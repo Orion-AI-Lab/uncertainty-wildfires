@@ -17,4 +17,4 @@ def scatter_plot_aleatoric_epistemic(aleatorics, epistemics, labels):
     plt.title('Scatter Plot of Aleatoric vs Epistemic Uncertainty')
     plt.grid(True)
     plt.show()
-    plt.savefig(f"plots/epistemic+aleatoric/scatter_plots/scatter_plot.png")
+    plt.savefig(f"plots/scatter_plot.png")

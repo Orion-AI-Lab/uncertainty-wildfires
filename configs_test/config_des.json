@@ -1,13 +1,13 @@
-{   "model_path": "/home/skondylatos/mnt/shared_storage/skondylatos/uncertainty_experiments/models/",
-    "noisy": true,
+{   "model_path": "",
+    "noisy": false,
     "temperature_scale": 0.2,
-    "num_models": 1,
-    "name": "noisy-vi",
+    "num_models": 10,
+    "name": "model",
     "n_gpu": 1,
     "gpu_id": 1,
 
     "arch": {
-        "type": "BBBLSTM",
+        "type": "SimpleLSTM",
         "args": {
             "output_lstm": 128,
             "dropout": 0.5}
@@ -15,7 +15,7 @@
     "dataset": {
         "type": "FireDataset",
         "args":{
-            "dataset_root": "/mnt/shared_storage/skondylatos/med_cube/datasets_bayesian",
+            "dataset_root": "",
             "problem_class": "classification",
             "nan_fill": 0.0,
             "lag": 45,
@@ -32,9 +32,9 @@
         }
     },
 
-    "loss": "bbb_loss",
+    "loss": "nll_loss",
     "positive_weight": 0.5,
-    "forward_passes": 50,
+    "forward_passes": 1,
     "dropout": false,
     "train_metrics": [
         "accuracy", "precision", "recall", "f1_score", "auc", "aucpr"

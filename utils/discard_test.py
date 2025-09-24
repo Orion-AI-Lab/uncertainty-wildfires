@@ -46,14 +46,7 @@ def draw_discard_test(losses, uncertainties, targets, predictions, name, unc_typ
     targets = np.concatenate(targets, axis=0)
     predictions = np.concatenate(predictions, axis=0)
 
-    if name == 'noisy-ensembles':
-        n = 'DEs + Aleatoric'
-    elif name == 'noisy-mcd':
-        n = 'MCD + Aleatoric'
-    elif name == 'noisy-vi':
-        n = "BBB + Aleatoric"
-    elif name == 'Noisy-Final':
-        n = "Aleatoric"
+    n = name
 
     discard_fractions, discard_error_values, discard_example_fractions, discard_targets, discard_predictions,\
         monotonicity_fraction, di = \
@@ -103,7 +96,7 @@ def draw_discard_test(losses, uncertainties, targets, predictions, name, unc_typ
     inset_axes.legend(bbox_to_anchor=(0.6, 0.9))
     plt.show()
 
-    plt.savefig(f"plots/{unc_type}/discard_{name}.png")
+    plt.savefig(f"plots/discard_{unc_type}_{name}.png")
 
     return
 

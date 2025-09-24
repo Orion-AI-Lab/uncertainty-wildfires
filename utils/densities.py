@@ -17,14 +17,7 @@ def draw_uncertainties_densities(predictions, targets, uncertainties, name, unc_
         correct = uncertainties[(predictions == targets) & np.isin(predictions, l)]
         incorrect = uncertainties[(predictions != targets) & np.isin(predictions, l)]
         
-        if name == 'noisy-ensembles':
-            n = 'DEs + Aleatoric'
-        elif name == 'noisy-mcd':
-            n = 'MCD + Aleatoric'
-        elif name == 'noisy-vi':
-            n = "BBB + Aleatoric"
-        elif name == 'Noisy-Final':
-            n = "Aleatoric"
+        n = name
         # # # x/y limits
         # ax.set_xlim(-0.0, 0.57)
         # ax.set_ylim(-0.0, 0.57)
@@ -47,7 +40,7 @@ def draw_uncertainties_densities(predictions, targets, uncertainties, name, unc_
         ax.legend(fontsize=14)
         plt.tight_layout()
         plt.show()
-    plt.savefig(f"plots/{unc_type}/densities_{name}.png")
+    plt.savefig(f"plots/densities_{unc_type}_{name}.png")
 
     # # Create grid
     # ax.set_axisbelow(True)

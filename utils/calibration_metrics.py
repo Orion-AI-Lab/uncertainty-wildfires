@@ -88,6 +88,6 @@ def draw_reliability_graph(preds, labels_oneh, name):
 
     plt.show()
 
-    plt.savefig(f"plots/calibration/calibration_{name}.png")
+    plt.savefig(f"plots/calibration_{name}.png")
 
     return
