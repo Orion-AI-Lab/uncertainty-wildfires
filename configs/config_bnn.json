@@ -1,5 +1,5 @@
 {
-    "name": "test",
+    "name": "model",
     "n_gpu": 1,
     "gpu_id": 1,
 
@@ -12,7 +12,7 @@
     "dataset": {
         "type": "FireDataset",
         "args":{
-            "dataset_root": "/mnt/shared_storage/skondylatos/med_cube/datasets_bayesian",
+            "dataset_root": "",
             "problem_class": "classification",
             "nan_fill": 0.0,
             "lag": 45,
@@ -59,7 +59,7 @@
     "trainer": {
         "epochs": 30,
 
-        "save_dir": "/home/skondylatos/mnt/shared_storage/skondylatos/uncertainty_experiments",
+        "save_dir": "",
         "save_period": 1,
         "verbosity": 2,
         
