@@ -1,6 +1,8 @@
 # Uncertainty-Aware Deep Learning for Wildfire Danger Forecasting
 
-This repository contains the code and pretrained models used in the paper **"Uncertainty-Aware Deep Learning for Wildfire Danger Forecasting"**. The project implements both deterministic and uncertainty-aware deep learning models to predict wildfire danger while quantifying predictive uncertainties.  
+This repository contains the code and pretrained models used in the paper **"Uncertainty-Aware Deep Learning for Wildfire Danger Forecasting"**. 
+
+The project implements both deterministic and uncertainty-aware deep learning models to predict wildfire danger.  
 
 ## Table of Contents
 - [Installation](#installation)  
@@ -20,8 +22,6 @@ git clone <repository_url>
 cd uncertainty-wildfires
 pip install -r requirements.txt
 ```
-
-Ensure you have the necessary packages for PyTorch, geospatial processing, and other dependencies specified in requirements.txt.
 
 ---
 
@@ -59,8 +59,6 @@ The `noisy` variable in the configuration files determines whether the model acc
 - Set `noisy: true` to include aleatoric noise in predictions.  
 - Set `noisy: false` to ignore aleatoric uncertainty.
 
----
-
 ### Deep Ensembles
 
 Deep Ensembles combine multiple trained models to improve predictive performance and quantify uncertainty. To run a Deep Ensemble:
@@ -68,5 +66,14 @@ Deep Ensembles combine multiple trained models to improve predictive performance
 1. Train the deterministic model multiple times using `config_det.json`.  
 2.  Use all trained models together for ensemble predictions. For this, you have to specify the number of models you have trained in `configs_test/config_des.json` via the `num_models` variable.  
 
+---
+
+## Pretrained Models
+
+All pretrained model checkpoints are available in the `trained_models` directory.
+
+---
 
 ## Citation
+
+If you use our work, please cite:
