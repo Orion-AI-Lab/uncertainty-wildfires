@@ -19,8 +19,11 @@ Clone this repository and install the required dependencies:
 git clone <repository_url>
 cd uncertainty-wildfires
 pip install -r requirements.txt
+```
 
 Ensure you have the necessary packages for PyTorch, geospatial processing, and other dependencies specified in requirements.txt.
+
+---
 
 ## Usage
 
@@ -32,6 +35,7 @@ To train a model, specify the corresponding configuration file. For example, to 
 
 ```bash
 python train.py --configs/config_bnn.json
+```
 
 You can modify the configuration files to change hyperparameters, model type, or enable aleatoric uncertainty.
 
@@ -43,6 +47,7 @@ To test a Bayesian Neural Network (BNN), for example:
 
 ```bash
 python test.py --configs_test/config_bnn.json
+```
 
 Before running any scripts, update the following paths in the configuration files:
 - `dataset_root`: Path to your dataset.
