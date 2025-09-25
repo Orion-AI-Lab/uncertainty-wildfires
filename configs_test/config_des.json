@@ -1,4 +1,4 @@
-{   "model_path": "",
+{   "model_path": "/home/skondylatos/jh-shared/skondylatos/unc-wild-test/uncertainty-wildfires/trained_models/ensembles/no-noisy",
     "noisy": false,
     "temperature_scale": 0.2,
     "num_models": 10,

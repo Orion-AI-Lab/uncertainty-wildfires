@@ -34,7 +34,7 @@ The repository includes configuration files for all models in the `configs` and 
 To train a model, specify the corresponding configuration file. For example, to train a Bayesian Neural Network (BNN):
 
 ```bash
-python train.py --configs/config_bnn.json
+python train.py --config configs/config_bnn.json
 ```
 
 You can modify the configuration files to change hyperparameters, model type, or enable aleatoric uncertainty.
@@ -46,7 +46,7 @@ To evaluate a trained model, use the configuration in `configs_test`.
 To test a Bayesian Neural Network (BNN), for example:
 
 ```bash
-python test.py --configs_test/config_bnn.json
+python test.py --config configs_test/config_bnn.json
 ```
 
 Before running any scripts, update the following paths in the configuration files:

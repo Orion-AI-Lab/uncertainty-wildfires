@@ -11,7 +11,6 @@ import models.model as module_arch
 from parse_config import ConfigParser
 from trainer import Trainer
 from utils import prepare_device
-import optimizers.sgld
 
 def main(config):
     # fix random seeds for reproducibility

@@ -1,8 +1,8 @@
 import torch
 import torch.nn as nn
 
-from blitz.modules import BayesianLSTM, BayesianLinear
-from blitz.utils import variational_estimator
+from libs.blitz.modules import BayesianLSTM, BayesianLinear
+from libs.blitz.utils import variational_estimator
 
 class SimpleLSTM(nn.Module):
     def __init__(self, output_lstm=128, dropout=0.5, len_features = 25, noisy=False):

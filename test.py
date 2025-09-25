@@ -47,10 +47,16 @@ def main(config):
     ts = "%.2f" % ts
     
     models = []
-    if 'noisy' in config["name"]:
-        folders = [os.path.join(config['model_path'], f) for f in os.listdir(config['model_path']) if config['name'] in f]
-    else:
-        folders = [os.path.join(config['model_path'], f) for f in os.listdir(config['model_path']) if config['name'] in f and 'noisy' not in f]
+    # if 'noisy' in config["name"]:
+    #     folders = [os.path.join(config['model_path'], f) for f in os.listdir(config['model_path']) if config['name'] in f]
+    # else:
+    #     folders = [os.path.join(config['model_path'], f) for f in os.listdir(config['model_path']) if config['name'] in f and 'noisy' not in f]
+
+    try:
+        folders = [os.path.join(config['model_path'], f) for f in os.listdir(config['model_path'])]
+    except NotADirectoryError:
+        folders = [config['model_path']]
+
     print(folders)
     # f = folders[0]
     for i in range(int(config["num_models"])):
@@ -58,7 +64,7 @@ def main(config):
         model = config.init_obj('arch', module_arch, len_features=len(dynamic_features) + len(static_features),
                                 noisy=config['noisy'])
         f = folders[i]
-        path = Path(glob(f + '/*/checkpoint-epoch30.pth')[0])
+        path = Path(glob(f)[0])
         # path = Path(glob(config['model_path'].format(config["name"] + last))[0])
         # path = Path(glob(config['model_path'])[0])
         logger.info('Loading checkpoint: {} ...'.format(path))
@@ -89,15 +95,11 @@ def main(config):
     losses = []
     targets = []
     predictions = []
-    entropies = []
     preds = []
     means = []
-    xs = []
-    ys = []
-    bas = []
 
     with torch.no_grad():
-        for batch_idx, (dynamic, static, bas_size, labels, x, y) in enumerate(dataloader):
+        for batch_idx, (dynamic, static, bas_size, labels) in enumerate(dataloader):
             static = static.unsqueeze(1).repeat(1, dynamic.shape[1], 1)
             labels = labels.to(device, dtype=torch.long)
             input_ = torch.cat([dynamic, static], dim=2)
@@ -164,9 +166,6 @@ def main(config):
                         test_metrics.update(met.__name__, met(entropy)[0], met(entropy)[1])
                     elif met.__name__ == 'ece':
                         test_metrics.ece_update(met.__name__, met(mean, labels)[0], met(mean, labels)[1])
-                    elif met.__name__ == 'spread_skill':
-                        test_metrics.spread_skill_update(met.__name__, met((mean[:, 1] - labels)**2, aleatoric[:, 1])[0],
-                                                         met((mean[:, 1] - labels)**2, aleatoric[:, 1])[1])
 
 
             losses.append(loss.detach().cpu().numpy())

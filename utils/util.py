@@ -6,7 +6,6 @@ from itertools import repeat
 from collections import OrderedDict
 from sklearn.metrics import roc_auc_score, average_precision_score
 from utils.calibration_metrics import ece
-from utils.spread_skill import spread_skill_reliability
 
 
 def ensure_dir(dirname):

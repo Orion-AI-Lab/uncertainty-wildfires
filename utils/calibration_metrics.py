@@ -50,11 +50,6 @@ def draw_reliability_graph(preds, labels_oneh, name):
 
     bins, _, bin_accs, _, bin_sizes = calc_bins(preds, labels_oneh)
 
-    path_accs = f'eces/{name}.npy'
-    path_sizes = f'eces/{name}_sizes.npy'
-
-    np.save(path_accs, bin_accs)
-    np.save(path_sizes, bin_sizes)
 
     fig = plt.figure(figsize=(8, 8))
     ax = fig.gca()
