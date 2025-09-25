@@ -25,33 +25,37 @@ pip install -r requirements.txt
 
 ---
 
+## Dataset
+
+You can download the dataset from: [Zenodo](https://zenodo.org/records/17201754)
+
 ## Usage
 
 The repository includes configuration files for all models in the `configs` and `configs_test` directories.
 
 ### Training
 
-To train a model, specify the corresponding configuration file. For example, to train a Bayesian Neural Network (BNN):
+To train a model, specify the corresponding configuration file. For example, to train a Variational Inference based Bayesian Neural Network:
 
 ```bash
 python train.py --config configs/config_bnn.json
 ```
 
-You can modify the configuration files to change hyperparameters, model type, or enable aleatoric uncertainty.
+You can modify the configuration files to change hyperparameters, model type, or enable aleatoric uncertainty (via the `noisy` parameter, check Aleatoric Uncertainty section).
 
 ### Testing
 
 To evaluate a trained model, use the configuration in `configs_test`.
 
-To test a Bayesian Neural Network (BNN), for example:
+For example, to test a Variational Inference based Bayesian Neural Network:
 
 ```bash
 python test.py --config configs_test/config_bnn.json
 ```
 
 Before running any scripts, update the following paths in the configuration files:
-- `dataset_root`: Path to your dataset.
-- `save_dir`: Path where trained models will be saved. This should be the same path used in `configs_test` to load models.
+- `dataset_root`: Path to your stored downloaded dataset.
+- `save_dir`: Path where trained models will be saved.
 
 ### Aleatoric Uncertainty
 
@@ -64,13 +68,13 @@ The `noisy` variable in the configuration files determines whether the model acc
 Deep Ensembles combine multiple trained models to improve predictive performance and quantify uncertainty. To run a Deep Ensemble:
 
 1. Train the deterministic model multiple times using `config_det.json`.  
-2.  Use all trained models together for ensemble predictions. For this, you have to specify the number of models you have trained in `configs_test/config_des.json` via the `num_models` variable.  
+2. Use all trained models together for ensemble predictions. For this, you have to specify the number of models you have trained in `configs_test/config_des.json` via the `num_models` variable.  
 
 ---
 
 ## Pretrained Models
 
-All pretrained model checkpoints are available in the `trained_models` directory.
+All pretrained checkpoints for the models that have been used in the paper are available in the `trained_models` directory.
 
 ---
 
